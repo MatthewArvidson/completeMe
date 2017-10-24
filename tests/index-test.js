@@ -1,5 +1,9 @@
 import { expect } from 'chai';
-import index from '../lib/index'
+import index from '../lib/index.js';
+
+import Trie from '../lib/Trie.js';
+import Node from '../lib/Node.js';
+
 import { bubbleSort, insertionSort, mergeSort, quickSort } from '@matthewarvidson/sorting-suite'
 
 describe('Example Test File', () => {
