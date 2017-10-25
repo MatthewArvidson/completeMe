@@ -24,6 +24,7 @@
     "webpack": "^3.3.0"
   },
   "dependencies": {
-    "@matthewarvidson/sorting-suite": "git+https://github.com/MatthewArvidson/sorting-suite.git"
+    "@matthewarvidson/sorting-suite": "git+https://github.com/MatthewArvidson/sorting-suite.git",
+    "babel-eslint": "^8.0.1"
   }
 }

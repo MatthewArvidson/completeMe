@@ -27,11 +27,11 @@ describe('First Trie test', () => {
     // console.log(JSON.stringify(completion, null, 2));
   })
 
-  // it('should populate a dictionary', () => {
-  //   var completion = new Trie();
-  //   completion.populate(dictionary);
-  //   expect(completion.count).to.equal(235886);
-  // })
+  it('should populate a dictionary', () => {
+    var completion = new Trie();
+    completion.populate(dictionary);
+    expect(completion.count).to.equal(235886);
+  })
 
 })
 
@@ -45,9 +45,9 @@ describe('Suggest', () => {
 
   it('should make a suggestion', () => {
     var completion = new Trie();
-    completion.insert('pizza');
-    completion.insert('pizzazz');
+    completion.insert('atlas');
+    completion.insert('apple');
 
-    expect(completion.suggest('piz')).to.deep.equal(['pizza', 'pizzazz']);
+    expect(completion.suggest('a')).to.deep.equal(['atlas', 'apple']);
   })
 })
