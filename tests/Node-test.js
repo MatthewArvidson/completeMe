@@ -6,5 +6,7 @@ describe('First Node test', () => {
   it('should be a function', () => {
     expect(Node).to.be.a('function');
   })
-  // it('should take a letter')
+  // it('should take a letter', () => {
+  //
+  // })
 })
