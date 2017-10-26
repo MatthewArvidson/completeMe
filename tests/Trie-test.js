@@ -55,7 +55,6 @@ describe('Trie test', () => {
 
     it('Should take in a string', () => {
       trie.populate(dictionary);
-      // console.log(trie.suggest('pot'));
       expect(trie.suggest('pot')).to.include.members(['pothunting', 'potleg']);
     })
 
@@ -64,6 +63,38 @@ describe('Trie test', () => {
       trie.insert('Pizza');
 
       expect(trie.suggest('piz')).to.deep.equal(['pizza']);
+    })
+
+    it('Should suggest words with higher popularity before alphabeticle words', () => {
+      trie.insert('pizza');
+      trie.insert('pie');
+      trie.insert('pass');
+
+      trie.select('pizza');
+      trie.select('pizza');
+
+      trie.select('pie');
+
+      expect(trie.suggest('p')).to.deep.equal(['pizza','pie', 'pass']);
+    })
+
+    it('Should not break the code if the current phrase matches no words', () => {
+      trie.insert('apple');
+      trie.insert('baby');
+      trie.insert('cat');
+      trie.insert('dog');
+
+      expect(trie.suggest('el')).to.deep.equal([]);
+    })
+
+    it('Should not break the code if the current phrase is not a letter', () => {
+      trie.insert('apple');
+      trie.insert('baby');
+      trie.insert('cat');
+      trie.insert('dog');
+
+      expect(trie.suggest('!')).to.deep.equal([]);
+      expect(trie.suggest('?')).to.deep.equal([]);
     })
 
   })
@@ -91,7 +122,6 @@ describe('Trie test', () => {
       expect(trie.count).to.equal(3);
       trie.insert('transubstantiation');
       expect(trie.count).to.equal(4);
-      // console.log(JSON.stringify(trie, null, 2));
     })
 
     it('should be able to take in a word', () => {
@@ -114,6 +144,12 @@ describe('Trie test', () => {
       expect(trie.populate).to.be.a('function');
     })
 
+    it('should populate with a given array', () => {
+      trie.populate(['apple', 'baby', 'cat', 'dog', 'elephant']);
+
+      expect(trie.count).to.equal(5)
+    })
+
     it('should populate a dictionary', () => {
       trie.populate(dictionary);
       expect(trie.count).to.equal(235886);
@@ -134,6 +170,30 @@ describe('Trie test', () => {
       trie.select('pie');
       expect(trie.root.children.p.children.i.children.e.popularity).to.equal(2);
     })
+
+    it('Should take in a string and returns words that begin with that string(large sample)', () => {
+      trie.populate(dictionary);
+
+      expect(trie.suggest('zom')).to.deep.equal(['zombi', 'zombie', 'zombiism', 'zomotherapeutic', 'zomotherapy'])
+
+      trie.select('zombie');
+
+      expect(trie.suggest('zom')).to.deep.equal(['zombie', 'zombi', 'zombiism', 'zomotherapeutic', 'zomotherapy'])
+    })
+
+    it('Should have words with higher popularity before alphabeticle words in the suggestion array', () => {
+      trie.insert('apple');
+      trie.insert('acre');
+      trie.insert('ants');
+
+      trie.select('apple');
+      trie.select('apple');
+
+      trie.select('ants');
+
+      expect(trie.suggest('a')).to.deep.equal(['apple','ants', 'acre']);
+    })
+
   })
 
 })
