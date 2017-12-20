@@ -196,4 +196,25 @@ describe('Trie test', () => {
 
   })
 
+  describe('delete', () => {
+    
+    it.only('should be an method', () => {
+      expect(trie.delete).to.be.a('function');
+    })
+
+    it.only('should delete a word from suggested words', () => {
+      trie.insert('cat');
+      trie.insert('cats');
+      trie.insert('catch');
+      trie.insert('catheter');
+      trie.insert('catatonic');
+
+      expect(trie.suggest('ca')).to.deep.equal(['cat', 'cats', 'catch', 'catheter', 'catatonic']);
+
+      trie.delete('cat');
+
+      expect(trie.suggest('ca')).to.deep.equal(['cats', 'catch', 'catheter', 'catatonic']);
+    })
+
+  })
 })
