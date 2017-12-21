@@ -198,11 +198,11 @@ describe('Trie test', () => {
 
   describe('delete', () => {
     
-    it.only('should be an method', () => {
+    it('should be an method', () => {
       expect(trie.delete).to.be.a('function');
     })
 
-    it.only('should delete a word from suggested words', () => {
+    it('should not suggest a word deleted from suggested words', () => {
       trie.insert('cat');
       trie.insert('cats');
       trie.insert('catch');
@@ -216,5 +216,50 @@ describe('Trie test', () => {
       expect(trie.suggest('ca')).to.deep.equal(['cats', 'catch', 'catheter', 'catatonic']);
     })
 
+    it('should not suggest any deleted words from suggested words', () => {
+      trie.insert('cat');
+      trie.insert('cats');
+      trie.insert('catch');
+      trie.insert('catheter');
+      trie.insert('catatonic');
+
+      expect(trie.suggest('ca')).to.deep.equal(['cat', 'cats', 'catch', 'catheter', 'catatonic']);
+
+      trie.delete('cat');
+
+      expect(trie.suggest('ca')).to.deep.equal(['cats', 'catch', 'catheter', 'catatonic']);
+
+      trie.delete('catch');
+
+      expect(trie.suggest('ca')).to.deep.equal(['cats', 'catheter', 'catatonic']);
+
+      trie.delete('catheter');
+      
+      expect(trie.suggest('ca')).to.deep.equal(['cats', 'catatonic']);
+    })
+
+    it('Should not suggest a deleted word from the dictionary', () => {
+      trie.populate(dictionary);
+
+      trie.delete('pizza');
+
+      expect(trie.suggest('pizza')).to.not.include.members(['pizza']);
+    })
+
+    it('Should not suggest any deleted words from the dictionary', () => {
+      trie.populate(dictionary);
+
+      trie.delete('pizza');
+
+      expect(trie.suggest('pizza')).to.not.include.members(['pizza']);
+
+      trie.delete('pizzle');
+      
+      expect(trie.suggest('pizza', 'pizzle')).to.not.include.members(['pizza', 'pizzle']);
+
+      trie.delete('attention');
+      
+      expect(trie.suggest('pizza', 'pizzle', 'attention')).to.not.include.members(['pizza', 'pizzle', 'attention']);
+    })
   })
 })
