@@ -26,4 +26,5 @@
   "dependencies": {
     "babel-eslint": "^8.0.1"
   }
+  
 }
