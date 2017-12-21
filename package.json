@@ -24,7 +24,6 @@
     "webpack": "^3.3.0"
   },
   "dependencies": {
-    "@MatthewArvidson/completeMe": "git+https://github.com/MatthewArvidson/completeMe.git",
     "babel-eslint": "^8.0.1"
   }
 }
